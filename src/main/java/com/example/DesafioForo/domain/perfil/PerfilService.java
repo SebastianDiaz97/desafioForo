@@ -12,9 +12,10 @@ public class PerfilService {
     @Autowired
     private PerfilRepository repository;
 
-    public Perfil savePerfil(DatosRegistroPerfil dato) {
+    public DatosListadoPerfil savePerfil(DatosRegistroPerfil dato) {
         var perfil = new Perfil(dato.nombre());
-        return repository.save(perfil);
+        repository.save(perfil);
+        return new DatosListadoPerfil(perfil);
     }
 
     public Page<DatosListadoPerfil> listarPerfiles(Pageable paginacion){
@@ -25,4 +26,16 @@ public class PerfilService {
         var perfil = repository.getReferenceById(id);
         perfil.desactivarPerfil();
     }
+
+    public DatosListadoPerfil modificarPerfil(DatosListadoPerfil datos) {
+        var perfil = repository.getReferenceById(datos.id());
+        perfil.modificarPerfil(datos);
+        return new DatosListadoPerfil(perfil);
+    }
+
+    public DatosListadoPerfil buscarPerfil(Long id) {
+        var datos = repository.findByIdAndActivoTrue(id);
+        return new DatosListadoPerfil(datos);
+    }
+
 }

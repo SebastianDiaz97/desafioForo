@@ -25,8 +25,13 @@ public class PerfilController {
 //    }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListadoPerfil>> obtenerPerfiles(Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoPerfil>> listarPerfiles(Pageable paginacion){
         return ResponseEntity.ok(service.listarPerfiles(paginacion));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity buscarUsuario(@PathVariable Long id){
+        return ResponseEntity.ok(service.buscarPerfil(id));
     }
 
     @PostMapping
@@ -41,5 +46,12 @@ public class PerfilController {
     public ResponseEntity eliminarPerfil(@PathVariable Long id) {
         service.eliminarPerfil(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping()
+    @Transactional
+    public ResponseEntity modificarPerfil(@RequestBody @Valid DatosListadoPerfil datos) {
+        var perfil = service.modificarPerfil(datos);
+        return ResponseEntity.ok(perfil);
     }
 }

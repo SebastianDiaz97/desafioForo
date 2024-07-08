@@ -1,4 +1,6 @@
 package com.example.DesafioForo.domain.perfil.DTO;
 
-public record DatosRegistroPerfil(String nombre) {
+import jakarta.validation.constraints.NotBlank;
+
+public record DatosRegistroPerfil(@NotBlank String nombre) {
 }

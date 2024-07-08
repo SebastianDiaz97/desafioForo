@@ -1,5 +1,6 @@
 package com.example.DesafioForo.domain.perfil;
 
+import com.example.DesafioForo.domain.perfil.DTO.DatosListadoPerfil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -17,7 +18,7 @@ public class Perfil {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private Boolean activo;
+    private Boolean activo = true;
 
     public Perfil(String nombre) {
         this.nombre = nombre;
@@ -30,6 +31,10 @@ public class Perfil {
     public Perfil(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
+    }
+
+    public void modificarPerfil(DatosListadoPerfil datos) {
+        this.nombre = datos.nombre();
     }
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 //    @JoinTable(name = "usuarioperfil", joinColumns = @JoinColumn(name = "perfil_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))

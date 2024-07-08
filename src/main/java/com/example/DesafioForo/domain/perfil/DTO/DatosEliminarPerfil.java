@@ -1,6 +1,8 @@
 package com.example.DesafioForo.domain.perfil.DTO;
 
+import jakarta.validation.constraints.NotNull;
+
 public record DatosEliminarPerfil(
-        Long id
+        @NotNull Long id
 ) {
 }
