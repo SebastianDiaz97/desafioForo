@@ -1,0 +1,1 @@
+alter table respuestas rename column fechaCreacion to fecha_creacion
