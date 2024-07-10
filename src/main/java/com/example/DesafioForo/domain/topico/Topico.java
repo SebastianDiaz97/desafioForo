@@ -28,12 +28,12 @@ public class Topico {
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "autor")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Usuario autor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curso")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Curso curso;

@@ -25,12 +25,12 @@ public class Respuesta {
     private String mensaje;
     private LocalDateTime fechaCreacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topico")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Topico topico;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "autor")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Usuario autor;

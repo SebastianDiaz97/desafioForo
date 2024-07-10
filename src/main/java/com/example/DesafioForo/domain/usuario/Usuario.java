@@ -4,8 +4,13 @@ import com.example.DesafioForo.domain.perfil.Perfil;
 import com.example.DesafioForo.domain.usuario.DTO.DatosModificacionUsuario;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
@@ -13,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +27,7 @@ public class Usuario {
     private String contrasena;
     private Boolean activo = true;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(
             name = "usuarioperfil",
             joinColumns = @JoinColumn(name = "usuario_id"),
@@ -52,4 +57,21 @@ public class Usuario {
         this.activo = false;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return perfil.stream()
+                .map(p -> new SimpleGrantedAuthority(p.getNombre()))
+                .collect(Collectors.toList());
+   //     return List.of(new SimpleGrantedAuthority());
+    }
+
+    @Override
+    public String getPassword() {
+        return contrasena;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

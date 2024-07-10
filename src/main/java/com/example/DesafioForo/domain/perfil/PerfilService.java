@@ -13,7 +13,7 @@ public class PerfilService {
     private PerfilRepository repository;
 
     public DatosListadoPerfil savePerfil(DatosRegistroPerfil dato) {
-        var perfil = new Perfil(dato.nombre());
+        var perfil = new Perfil(dato.nombre().toUpperCase());
         repository.save(perfil);
         return new DatosListadoPerfil(perfil);
     }
